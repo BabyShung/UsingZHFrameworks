@@ -1,0 +1,13 @@
+{
+  "commitish" : "1.1",
+  "iOS" : [
+    {
+      "hash" : "bace0b768d1244072654532f1ac414213949e1ae774b487dba88e856ce19efc4",
+      "name" : "ZHExtensions"
+    },
+    {
+      "hash" : "ee7b1aa04f3556b4f91ffa58141eb005f4ae38dff9d85dd26c47df7c8d0934ac",
+      "name" : "SplashWindow"
+    }
+  ]
+}
