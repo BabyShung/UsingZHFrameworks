@@ -139,11 +139,14 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
 #pragma clang diagnostic ignored "-Wduplicate-method-arg"
+@class UIImage;
 @class NSBundle;
 @class NSCoder;
 
 SWIFT_CLASS("_TtC12SplashWindow21OptionsViewController")
 @interface OptionsViewController : UIViewController
+@property (nonatomic, strong) UIImage * _Nullable touchIDBtnImage;
+@property (nonatomic, strong) UIImage * _Nullable logoutBtnBtnImage;
 - (void)viewDidLoad;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
@@ -151,8 +154,8 @@ SWIFT_CLASS("_TtC12SplashWindow21OptionsViewController")
 
 @class UIColor;
 
-SWIFT_CLASS("_TtC12SplashWindow12ShadowButton")
-@interface ShadowButton : UIButton
+SWIFT_CLASS("_TtC12SplashWindow14SWShadowButton")
+@interface SWShadowButton : UIButton
 @property (nonatomic, strong) UIColor * _Nonnull pulseColor;
 @property (nonatomic) CGFloat pulseRadius;
 @property (nonatomic) CGFloat pulseDuration;
@@ -165,13 +168,13 @@ SWIFT_CLASS("_TtC12SplashWindow12ShadowButton")
 @class UITouch;
 @class UIEvent;
 
-@interface ShadowButton (SWIFT_EXTENSION(SplashWindow))
+@interface SWShadowButton (SWIFT_EXTENSION(SplashWindow))
 - (void)touchesEnded:(NSSet<UITouch *> * _Nonnull)touches withEvent:(UIEvent * _Nullable)event;
 @end
 
 
-SWIFT_CLASS("_TtC12SplashWindow10ShadowView")
-@interface ShadowView : UIView
+SWIFT_CLASS("_TtC12SplashWindow12SWShadowView")
+@interface SWShadowView : UIView
 - (void)awakeFromNib;
 - (void)layoutSubviews;
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
@@ -181,25 +184,39 @@ SWIFT_CLASS("_TtC12SplashWindow10ShadowView")
 
 SWIFT_CLASS("_TtC12SplashWindow12SplashWindow")
 @interface SplashWindow : UIWindow
+@property (nonatomic, strong) UIImage * _Nullable touchIDBtnImage;
+@property (nonatomic, strong) UIImage * _Nullable logoutBtnImage;
+/// Closure when clicked logout btn. Expecting a returned loginVC for transition
+@property (nonatomic, copy) UIViewController * _Nullable (^ _Nonnull logoutClosure)(void);
+/// True if self showing touchID/passcode, false if default or auth succeeded
+@property (nonatomic, readonly) BOOL isAuthenticating;
+/// If your app is using a launchScreen.xib to set the splash screen,
+/// use this initializer for your app
+/// \param window main Window in appDelegate
+///
+/// \param launchXibView UIView from your xib file
+///
+- (nonnull instancetype)initWithWindow:(UIWindow * _Nonnull)window launchXibView:(UIView * _Nonnull)launchXibView;
+/// If your app is using LaunchScreen.storyboard
+/// which contains your launchViewController, use this initializer
+/// \param window main Window in appDelegate
+///
+/// \param launchViewController your launchScreen viewController
+///
+- (nonnull instancetype)initWithWindow:(UIWindow * _Nonnull)window launchViewController:(UIViewController * _Nonnull)launchViewController OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
 @end
 
 
 @interface SplashWindow (SWIFT_EXTENSION(SplashWindow))
-- (void)authenticateUserWithInitialVC:(UIViewController * _Nullable)initialVC;
+- (void)authenticateUserWithIsLoggedIn:(BOOL)isLoggedIn initialVC:(UIViewController * _Nullable)initialVC;
 - (void)showSplashView;
 - (void)enteredBackground;
 @end
 
 
 @interface SplashWindow (SWIFT_EXTENSION(SplashWindow))
-@end
-
-
-@interface UIWindow (SWIFT_EXTENSION(SplashWindow))
-- (void)transitionRootTo:(UIViewController * _Nonnull)vc;
-- (void)transitionRootTo:(UIViewController * _Nonnull)vc completion:(void (^ _Nonnull)(BOOL))completion;
 @end
 
 

@@ -1,12 +1,12 @@
 {
-  "commitish" : "1.1",
+  "commitish" : "1.5",
   "iOS" : [
     {
-      "hash" : "bace0b768d1244072654532f1ac414213949e1ae774b487dba88e856ce19efc4",
+      "hash" : "e76d1b444ae4ccdfb795e20eb5424174d480f88f282819ab2b0004c0cfaa3d27",
       "name" : "ZHExtensions"
     },
     {
-      "hash" : "ee7b1aa04f3556b4f91ffa58141eb005f4ae38dff9d85dd26c47df7c8d0934ac",
+      "hash" : "43fd7c620b644a53429fc8921f9cdf5ca6143bbaf82dac2606899c0cbe4d1826",
       "name" : "SplashWindow"
     }
   ]

@@ -6,12 +6,6 @@ import LocalAuthentication
 public class SplashWindow: UIWindow {
     
     /* PUBLIC */
-    public var touchIDMessage = "" {
-        didSet {
-            appAuth.touchIDMessage = touchIDMessage
-        }
-    }
-    
     public var touchIDBtnImage: UIImage? {
         didSet {
             optionVC.touchIDBtnImage = touchIDBtnImage
@@ -40,7 +34,6 @@ public class SplashWindow: UIWindow {
     /// App main window
     fileprivate unowned var protectedWindow: UIWindow
     
-    
     /// Your initial view controller
     fileprivate var initialVC: UIViewController?
     
@@ -66,20 +59,24 @@ public class SplashWindow: UIWindow {
         return optionVC
     }()
     
-    /**
-     Depends on where your launch screen lives
-     - launchScreen in a xib
-     - launchScreen in a storyboard
-     */
-    public convenience init(window: UIWindow,
-                     launchXibName: String) {
+    /// If your app is using a launchScreen.xib to set the splash screen,
+    /// use this initializer for your app
+    /// - Parameters:
+    ///   - window: main Window in appDelegate
+    ///   - launchXibView: UIView from your xib file
+    public convenience init(window: UIWindow, launchXibView: UIView) {
         let dummyVC = UIViewController()
         dummyVC.view.isHidden = true
         self.init(window: window, launchViewController: dummyVC)
-        guard let splashView = Bundle.main.loadNibNamed(launchXibName, owner: nil, options: nil)?.first as? UIView else { return }
-        splashView.constraintEdges(to: self)
+        launchXibView.translatesAutoresizingMaskIntoConstraints = false
+        launchXibView.constraintEdges(to: self)
     }
     
+    /// If your app is using LaunchScreen.storyboard 
+    /// which contains your launchViewController, use this initializer
+    /// - Parameters:
+    ///   - window: main Window in appDelegate
+    ///   - launchViewController: your launchScreen viewController
     public init(window: UIWindow, launchViewController: UIViewController) {
         self.protectedWindow = window
         super.init(frame: window.frame)
@@ -200,7 +197,7 @@ extension SplashWindow {
         }
     }
     
-    private func cleanup() {
+    private func reset() {
         self.isAuthenticating = false
         self.initialVC = nil
         
@@ -222,7 +219,7 @@ extension SplashWindow {
     fileprivate func showOptionView() {
         
         optionVC.didClicklogout = { [weak self] in
-            self?.cleanup()
+            self?.reset()
         }
         optionVC.didClickTouchID = { [weak self] _ in
             self?.rootViewController?.dismiss(animated: true, completion: nil)

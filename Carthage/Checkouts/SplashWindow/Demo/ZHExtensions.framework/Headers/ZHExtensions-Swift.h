@@ -141,11 +141,23 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #pragma clang diagnostic ignored "-Wduplicate-method-arg"
 
 @interface NSAttributedString (SWIFT_EXTENSION(ZHExtensions))
+/// Set indentation (left padding) of self
+/// \param text text
+///
+/// \param val padding value
+///
+///
+/// returns:
+/// new attributed string
 + (NSAttributedString * _Nonnull)indentStringWithText:(NSString * _Nonnull)text val:(CGFloat)val SWIFT_WARN_UNUSED_RESULT;
 @end
 
 
 @interface UIButton (SWIFT_EXTENSION(ZHExtensions))
+/// If you have set an image in self, this will try to center both titleLabel
+/// and imageView
+/// \param padding padding between btn and imageView
+///
 - (void)centerVerticallyWithPadding:(CGFloat)padding;
 @end
 
@@ -162,7 +174,13 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 
 @interface UIView (SWIFT_EXTENSION(ZHExtensions))
+/// show or hide current view
+/// \param show show or hide
+///
+/// \param animated animated
+///
 - (void)showSelfWithShow:(BOOL)show animated:(BOOL)animated;
+/// Root: show or hide current view
 - (void)showSelfWithShow:(BOOL)show animated:(BOOL)animated animations:(void (^ _Nonnull)(void))animations completion:(void (^ _Nonnull)(BOOL))completion;
 @end
 
@@ -187,6 +205,12 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 - (void)constraintPinToLeadingWithParent:(UIView * _Nonnull)parent;
 - (void)constraintPinToBottomWithParent:(UIView * _Nonnull)parent;
 - (void)constraintPinToTrailingWithParent:(UIView * _Nonnull)parent;
+@end
+
+
+@interface UIWindow (SWIFT_EXTENSION(ZHExtensions))
+- (void)transitionRootTo:(UIViewController * _Nonnull)vc;
+- (void)transitionRootTo:(UIViewController * _Nonnull)vc completion:(void (^ _Nonnull)(BOOL))completion;
 @end
 
 
